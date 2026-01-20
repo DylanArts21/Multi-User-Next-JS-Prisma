@@ -1,6 +1,7 @@
 "use client";
 import { signOut } from "next-auth/react";
 import React from "react";
+import "@/app/globals.css";
 
 export default function AdminDashboardPage() {
   return (
@@ -21,7 +22,7 @@ export default function AdminDashboardPage() {
             href="#"
             className="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700"
           >
-            Users
+            Product
           </a>
           <a
             href="#"
@@ -59,7 +60,7 @@ export default function AdminDashboardPage() {
             {/* Area konten admin */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="border border-yellow-300 rounded p-4">
-                <h3 className="font-semibold text-black">Total Users</h3>
+                <h3 className="font-semibold text-black">Total Product</h3>
                 <p className="text-2xl mt-2 text-gray-500">—</p>
               </div>
               <div className="border border-blue-800 rounded p-4">
