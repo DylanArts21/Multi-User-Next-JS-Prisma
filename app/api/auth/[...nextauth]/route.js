@@ -23,7 +23,7 @@ export const authOptions = {
 
         const passwordMatch = await bcrypt.compare(
           credentials.password,
-          user.password
+          user.password,
         );
         if (!passwordMatch) throw new Error("Password salah!");
 
@@ -34,10 +34,12 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.role = user.role;
+      token.createdAt = token.createdAt;
       return token;
     },
     async session({ session, token }) {
       if (session.user) session.user.role = token.role;
+      session.user.createdAt = token.createdAt;
       return session;
     },
   },
