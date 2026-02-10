@@ -1,9 +1,17 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
-import { ProductType } from "next-auth";
+import Link from "next/link";
+
+type ProductType = {
+  id: string;
+  name: string;
+  price: number;
+  stock: number;
+  createdAt: string;
+};
 
 const rupiah = new Intl.NumberFormat("id-ID", {
   style: "currency",
@@ -11,30 +19,23 @@ const rupiah = new Intl.NumberFormat("id-ID", {
   minimumFractionDigits: 0,
 });
 
-export default function Product() {
-  const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
-
+export default function ProductPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
-
-  //   const id = session?.produ
+  const [open, setOpen] = useState(false);
 
   async function fetchProducts() {
     try {
-      const res = await fetch("/api/products", {
+      const res = await fetch("/api/product", {
         credentials: "include",
       });
 
-      if (!res.ok) {
-        throw new Error("Gagal ambil products");
-        // console.log("Gagal ambil products");
-      }
+      if (!res.ok) throw new Error("Gagal ambil product");
 
       const data = await res.json();
       setProducts(data);
-    } catch (err) {
-      console.error("Gagal ambil products:", err);
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -44,52 +45,110 @@ export default function Product() {
     fetchProducts();
   }, []);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     if (!confirm("Yakin ingin menghapus produk ini?")) return;
 
     try {
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`/api/product/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
 
-      if (!res.ok) {
-        throw new Error("Gagal menghapus product");
-      }
+      if (!res.ok) throw new Error("Gagal hapus product");
 
       setProducts((prev) => prev.filter((p) => p.id !== id));
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
       alert("Gagal menghapus product");
     }
   }
 
   return (
     <div className="min-h-screen bg-gray-900 flex">
+      {open && (
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 bg-black/30"
+            onClick={() => setOpen(false)}
+          />
+
+          {/* Sidebar */}
+          <aside className="relative w-64 bg-black h-full shadow">
+            <div className="p-6 font-bold text-xl  flex justify-between text-white">
+              Admin Panel
+              <button onClick={() => setOpen(false)}>✕</button>
+            </div>
+            <nav className="p-4 space-y-2">
+              <a
+                href="#"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 rounded bg-gray-200  text-black transition-colors duration-150 hover:bg-gray-100 active:bg-gray-200 focus:bg-gray-100 focus:outline-none"
+              >
+                Dashboard
+              </a>
+              <a
+                href="#"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 rounded text-white transition-colors duration-150 hover:bg-gray-100 active:bg-gray-200 focus:bg-gray-100 focus:outline-none"
+              >
+                Profile
+              </a>
+
+              <a
+                href="#"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 rounded text-white transition-colors duration-150 hover:bg-gray-100 active:bg-gray-200 focus:bg-gray-100 focus:outline-none"
+              >
+                Settings
+              </a>
+              <button
+                onClick={() => signOut({ callbackUrl: "/" })}
+                className="
+        w-full text-left block px-4 py-2 rounded
+        text-red-500 hover:bg-red-500 hover:text-white
+        transition-colors
+      "
+              >
+                Logout
+              </button>
+            </nav>
+          </aside>
+        </div>
+      )}
       {/* Sidebar */}
       <aside className="w-64 bg-black border-r hidden md:block">
         <div className="p-6 font-bold text-xl text-white border-b">
           Admin Panel
         </div>
         <nav className="p-4 space-y-2">
-          <a
+          <Link
             href="/dashboard/admin"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
           >
             Dashboard
-          </a>
-          <a
+          </Link>
+
+          <Link
             href="/dashboard/admin/product"
             className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
           >
             Product
-          </a>
-          <a
+          </Link>
+
+          <Link
             href="#"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
             Settings
-          </a>
+          </Link>
+
+          <Link
+            href="/dashboard/admin/product/create"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
+          >
+            Tambah Product
+          </Link>
+
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="w-full text-left px-4 py-2 rounded text-red-500 hover:bg-red-500 hover:text-white"
@@ -101,53 +160,58 @@ export default function Product() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <header className="bg-black px-6 py-4 flex justify-between items-center">
+        <header className="bg-black  px-6 py-4 flex justify-between items-center">
+          {/* Burger button */}
           <button
             onClick={() => setOpen(true)}
-            className="md:hidden text-white"
+            className="md:hidden text-gray-700"
           >
             ☰
           </button>
-          <h1 className="text-lg font-semibold text-white">Daftar Product</h1>
+          <h1 className="text-lg font-semibold text-white">Dashboard</h1>
+          {/* <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm"
+          >
+            Logout
+          </button> */}
         </header>
 
-        {/* Content */}
-        <main className="p-6 bg-black-100 flex-1">
+        <main className="p-6 flex-1">
           {loading ? (
-            <p>Loading...</p>
+            <p className="text-white">Loading...</p>
           ) : products.length === 0 ? (
-            <p>Belum ada data</p>
+            <p className="text-white">Belum ada data</p>
           ) : (
-            <div className="overflow-x-auto bg-white rounded shadow">
+            <div className="overflow-x-auto bg-black rounded shadow">
               <table className="w-full border-collapse">
-                <thead className="bg-gray-200">
+                <thead className="bg-black">
                   <tr>
                     <th className="border p-2">No</th>
                     <th className="border p-2">Nama</th>
                     <th className="border p-2">Harga</th>
+                    <th className="border p-2">Stok</th>
                     <th className="border p-2">Dibuat</th>
                     <th className="border p-2">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((p, index) => (
+                  {products.map((p, i) => (
                     <tr key={p.id} className="text-center">
-                      <td className="border p-2">{index + 1}</td>
+                      <td className="border p-2">{i + 1}</td>
                       <td className="border p-2 text-left">{p.name}</td>
                       <td className="border p-2">{rupiah.format(p.price)}</td>
+                      <td className="border p-2">{p.stock}</td>
                       <td className="border p-2">
                         {new Date(p.createdAt).toLocaleDateString("id-ID")}
                       </td>
                       <td className="border p-2 space-x-2">
-                        <button
-                          onClick={() =>
-                            (window.location.href = `/dashboard/products/edit?id=${p.id}`)
-                          }
+                        <Link
+                          href={`/dashboard/admin/product/edit?id=${p.id}`}
                           className="px-3 py-1 bg-blue-500 text-white rounded"
                         >
                           Edit
-                        </button>
+                        </Link>
                         <button
                           onClick={() => handleDelete(p.id)}
                           className="px-3 py-1 bg-red-500 text-white rounded"

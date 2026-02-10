@@ -7,8 +7,8 @@ export default function Footer({ role = "user" }: FooterProps) {
     <footer className="mt-auto bg-black border-t px-6 py-4">
       <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-200">
         <span>
-          © {new Date().getFullYear()}{" "}
-          {role === "admin" ? "Admin Dashboard" : "User Dashboard"}
+          © {new Date().getFullYear()}
+          {role === "admin" ? " Admin Dashboard" : " User Dashboard"}
         </span>
 
         <div className="flex gap-4">

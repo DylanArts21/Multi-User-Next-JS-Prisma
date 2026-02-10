@@ -1,38 +1,25 @@
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../../../app/api/auth/[...nextauth]/route";
 import prisma from "../../../lib/prisma";
-import { getSession } from "next-auth/react";
 
 export default async function handler(req, res) {
-  const session = await getSession({ req });
+  const session = await getServerSession(req, res, authOptions);
 
-  if (!session || session.user.role !== "ADMIN") {
+  if (!session) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
-  // GET list product
   if (req.method === "GET") {
-    const products = await prisma.product.findMany({
-      orderBy: { id: "desc" },
-    });
-    return res.json(products);
-  }
+    try {
+      const products = await prisma.product.findMany({
+        orderBy: { createdAt: "desc" },
+      });
 
-  // CREATE product
-  if (req.method === "POST") {
-    const { name, price } = req.body;
-
-    if (!name || price == null) {
-      return res.status(400).json({ message: "Invalid data" });
+      return res.status(200).json(products);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error" });
     }
-
-    const product = await prisma.product.create({
-      data: {
-        name,
-        price,
-      },
-    });
-
-    return res.status(201).json(product);
   }
 
-  res.status(405).end();
+  res.status(405).json({ message: "Method Not Allowed" });
 }

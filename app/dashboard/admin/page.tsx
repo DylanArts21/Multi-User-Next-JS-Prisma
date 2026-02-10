@@ -1,5 +1,6 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useState } from "react";
 import "@/app/globals.css";
 import Footer from "@/components/Footer";
@@ -43,6 +44,7 @@ export default function AdminDashboardPage() {
               >
                 Profile
               </a>
+
               <a
                 href="#"
                 onClick={() => setOpen(false)}
@@ -81,12 +83,19 @@ export default function AdminDashboardPage() {
           >
             Product
           </a>
+
           <a
             href="#"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
             Settings
           </a>
+          <Link
+            href="/dashboard/admin/product/create"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
+          >
+            Tambah Product
+          </Link>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="

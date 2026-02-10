@@ -5,13 +5,30 @@ import prisma from "../../../lib/prisma";
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session || session.user.role !== "admin") {
+  if (!session) {
     return res.status(401).json({ message: "Unauthorized" });
   }
 
   const { id } = req.query;
 
-  //UPDATE
+  // GET detail
+  if (req.method === "GET") {
+    try {
+      const product = await prisma.product.findUnique({
+        where: { id },
+      });
+
+      if (!product) {
+        return res.status(404).json({ message: "Product tidak ditemukan" });
+      }
+
+      return res.status(200).json(product);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error" });
+    }
+  }
+
+  // UPDATE
   if (req.method === "PUT") {
     const { name, price } = req.body;
 
@@ -25,21 +42,21 @@ export default async function handler(req, res) {
       });
 
       return res.status(200).json(product);
-    } catch {
-      return res.status(500).json({ message: "Gagal update produk" });
+    } catch (error) {
+      return res.status(500).json({ message: "Gagal update product" });
     }
   }
 
-  //DELETE
+  // DELETE
   if (req.method === "DELETE") {
     try {
       await prisma.product.delete({
         where: { id },
       });
 
-      return res.status(200).json({ message: "Produk berhasil dihapus" });
-    } catch {
-      return res.status(500).json({ message: "Gagal menghapus produk" });
+      return res.status(200).json({ message: "Product berhasil dihapus" });
+    } catch (error) {
+      return res.status(500).json({ message: "Gagal menghapus product" });
     }
   }
 
