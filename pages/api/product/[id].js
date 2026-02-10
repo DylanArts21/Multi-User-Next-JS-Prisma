@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
   // UPDATE
   if (req.method === "PUT") {
-    const { name, price } = req.body;
+    const { name, price, stock } = req.body;
 
     try {
       const product = await prisma.product.update({
@@ -38,6 +38,7 @@ export default async function handler(req, res) {
         data: {
           name,
           price: Number(price),
+          stock: Number(stock) || 0,
         },
       });
 

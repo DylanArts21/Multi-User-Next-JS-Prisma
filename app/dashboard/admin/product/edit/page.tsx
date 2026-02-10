@@ -10,6 +10,7 @@ export default function EditProductPage() {
 
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [stock, setStock] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -19,6 +20,7 @@ export default function EditProductPage() {
       .then((data) => {
         setName(data.name);
         setPrice(data.price);
+        setStock(data.stock);
       });
   }, [id]);
 
@@ -28,7 +30,7 @@ export default function EditProductPage() {
     const res = await fetch(`/api/product/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, price }),
+      body: JSON.stringify({ name, price, stock }),
     });
 
     if (res.ok) {
@@ -54,6 +56,12 @@ export default function EditProductPage() {
           type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          className="w-full border p-2 rounded"
+        />
+        <input
+          type="number"
+          value={stock}
+          onChange={(e) => setStock(e.target.value)}
           className="w-full border p-2 rounded"
         />
 

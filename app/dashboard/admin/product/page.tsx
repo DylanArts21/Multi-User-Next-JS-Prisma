@@ -206,12 +206,13 @@ export default function ProductPage() {
                         {new Date(p.createdAt).toLocaleDateString("id-ID")}
                       </td>
                       <td className="border p-2 space-x-2">
-                        <Link
-                          href={`/dashboard/admin/product/edit?id=${p.id}`}
-                          className="px-3 py-1 bg-blue-500 text-white rounded"
-                        >
-                          Edit
-                        </Link>
+                        <button className="px-3 py-1 bg-blue-500 text-white rounded">
+                          <Link
+                            href={`/dashboard/admin/product/edit?id=${p.id}`}
+                          >
+                            Edit
+                          </Link>
+                        </button>
                         <button
                           onClick={() => handleDelete(p.id)}
                           className="px-3 py-1 bg-red-500 text-white rounded"
