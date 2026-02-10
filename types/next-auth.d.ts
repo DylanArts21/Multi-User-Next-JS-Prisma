@@ -19,4 +19,11 @@ declare module "next-auth" {
     createdAt?: string | Date;
     [key: string]: any;
   }
+
+  interface ProductType {
+  id: number;
+  name: string;
+  price: number;
+  createdAt: string;
+}
 }

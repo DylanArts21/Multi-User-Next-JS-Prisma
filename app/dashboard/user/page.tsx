@@ -74,10 +74,10 @@ export default function UserDashboardPage() {
             Dashboard
           </a>
           <a
-            href="#"
+            href="/dashboard/user/product"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
-            Profile
+            Product
           </a>
           <a
             href="#"
