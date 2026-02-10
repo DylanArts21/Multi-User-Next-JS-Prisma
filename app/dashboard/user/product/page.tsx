@@ -126,6 +126,7 @@ export default function Product() {
                     <th className="border p-2">No</th>
                     <th className="border p-2">Nama</th>
                     <th className="border p-2">Harga</th>
+                    <th className="border p-2">Stok</th>
                     <th className="border p-2">Dibuat</th>
                     {/* <th className="border p-2">Aksi</th> */}
                   </tr>
@@ -136,6 +137,7 @@ export default function Product() {
                       <td className="border p-2">{index + 1}</td>
                       <td className="border p-2 text-left">{p.name}</td>
                       <td className="border p-2">{rupiah.format(p.price)}</td>
+                      <td className="border p-2">{p.stock}</td>
                       <td className="border p-2">
                         {new Date(p.createdAt).toLocaleDateString("id-ID")}
                       </td>
