@@ -165,7 +165,7 @@ export default function Product() {
           )}
         </main>
 
-        <Footer role="admin" />
+        <Footer role="user" />
       </div>
     </div>
   );
