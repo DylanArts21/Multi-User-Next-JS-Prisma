@@ -2,6 +2,12 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../../app/api/auth/[...nextauth]/route";
 import prisma from "../../../lib/prisma";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default async function handler(req, res) {
   const session = await getServerSession(req, res, authOptions);
 

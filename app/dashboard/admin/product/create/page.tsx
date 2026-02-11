@@ -8,14 +8,23 @@ export default function CreateProductPage() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [image, setImage] = useState<File | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("stock", stock);
+
+    if (image) {
+      formData.append("image", image);
+    }
+
     const res = await fetch("/api/product/create", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, price: Number(price), stock: Number(stock) }),
+      body: formData,
     });
 
     if (res.ok) {
@@ -53,6 +62,18 @@ export default function CreateProductPage() {
           onChange={(e) => setStock(e.target.value)}
           className="w-full border p-2 rounded"
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+        />
+
+        {image && (
+          <img
+            src={URL.createObjectURL(image)}
+            className="w-32 h-32 object-cover rounded"
+          />
+        )}
 
         <button className="bg-black text-white px-4 py-2 rounded">
           Simpan

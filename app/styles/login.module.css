@@ -1,0 +1,22 @@
+/* Override browser autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #272d35 inset !important;
+  -webkit-text-fill-color: white !important;
+  box-shadow: 0 0 0 3px white;
+  outline: 1px solid white;
+}
+
+.bgImg {
+  background-image: url("/background-game-store.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.formTransparent {
+  background-color: transparent;
+  backdrop-filter: blur(20px);
+}

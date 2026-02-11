@@ -25,6 +25,7 @@ declare module "next-auth" {
   name: string;
   price: number;
   stock: number;
+  imageUrl?: string;
   createdAt: string;
 }
 }

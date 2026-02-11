@@ -10,6 +10,7 @@ type ProductType = {
   name: string;
   price: number;
   stock: number;
+  imageUrl?: string;
   createdAt: string;
 };
 
@@ -192,6 +193,7 @@ export default function ProductPage() {
                     <th className="border p-2">Harga</th>
                     <th className="border p-2">Stok</th>
                     <th className="border p-2">Dibuat</th>
+                    <th className="border p-2">Gambar</th>
                     <th className="border p-2">Aksi</th>
                   </tr>
                 </thead>
@@ -205,6 +207,18 @@ export default function ProductPage() {
                       <td className="border p-2">
                         {new Date(p.createdAt).toLocaleDateString("id-ID")}
                       </td>
+                      <td className="border p-2">
+                        {p.imageUrl ? (
+                          <img
+                            src={p.imageUrl}
+                            alt={p.name}
+                            className="w-16 h-16 object-cover mx-auto rounded"
+                          />
+                        ) : (
+                          "No Image"
+                        )}
+                      </td>
+
                       <td className="border p-2 space-x-2">
                         <button className="px-3 py-1 bg-blue-500 text-white rounded">
                           <Link

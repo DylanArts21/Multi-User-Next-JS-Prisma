@@ -11,6 +11,8 @@ export default function EditProductPage() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [currentImage, setCurrentImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -21,16 +23,25 @@ export default function EditProductPage() {
         setName(data.name);
         setPrice(data.price);
         setStock(data.stock);
+        setCurrentImage(data.imageUrl);
       });
   }, [id]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("stock", stock);
+
+    if (image) {
+      formData.append("image", image);
+    }
+
     const res = await fetch(`/api/product/${id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, price, stock }),
+      body: formData,
     });
 
     if (res.ok) {
@@ -64,6 +75,35 @@ export default function EditProductPage() {
           onChange={(e) => setStock(e.target.value)}
           className="w-full border p-2 rounded"
         />
+
+        {/* Preview gambar lama */}
+        {currentImage && !image && (
+          <div>
+            <p className="text-sm mb-2">Gambar Saat Ini:</p>
+            <img
+              src={currentImage}
+              className="w-32 h-32 object-cover rounded"
+            />
+          </div>
+        )}
+
+        {/* Upload gambar baru */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
+        />
+
+        {/* Preview gambar baru */}
+        {image && (
+          <div>
+            <p className="text-sm mb-2">Preview Gambar Baru:</p>
+            <img
+              src={URL.createObjectURL(image)}
+              className="w-32 h-32 object-cover rounded"
+            />
+          </div>
+        )}
 
         <button className="bg-black text-white px-4 py-2 rounded">
           Update
