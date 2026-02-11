@@ -89,7 +89,8 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded transition"
+            aria-describedby="tier-company"
+            className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-white hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
           >
             Sign Up
           </button>
@@ -98,7 +99,7 @@ export default function RegisterPage() {
         {/* Footer */}
         <div className="mt-6 text-center text-sm text-gray-600">
           Sudah punya akun?{" "}
-          <a href="/" className="text-blue-600 hover:underline font-medium">
+          <a href="/" className="text-white hover:underline font-medium">
             Login
           </a>
         </div>

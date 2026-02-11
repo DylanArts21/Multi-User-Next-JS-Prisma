@@ -3,6 +3,7 @@
 import { signIn, getSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import style from "../styles/login.module.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -58,11 +59,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="w-full max-w-md bg-white shadow rounded-lg p-8">
+    <div
+      className={`min-h-screen ${style.bgImg} flex items-center justify-center`}
+    >
+      <div
+        className={`w-full max-w-md ${style.formTransparent} shadow rounded-lg p-8 border border-2`}
+      >
         {/* Title */}
         <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-800">Login</h1>
+          <h1 className="text-2xl font-bold text-gray-200">Login</h1>
           <p className="text-sm text-gray-500 mt-1">
             Silakan masuk ke akun Anda
           </p>
@@ -71,7 +76,7 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleLogin} autoComplete="on">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-200 mb-1">
               Email
             </label>
             <input
@@ -81,12 +86,12 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-green-500 text-black"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-white text-white "
             />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-200 mb-1">
               Password
             </label>
             <input
@@ -96,17 +101,20 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-green-500 text-black"
+              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-white text-white"
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded transition"
-          >
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
+          <div className="flex px-6 pb-8 sm:px-8">
+            <button
+              type="submit"
+              disabled={loading}
+              aria-describedby="tier-company"
+              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-white hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+          </div>
         </form>
 
         {/* Footer */}
@@ -114,7 +122,7 @@ export default function LoginPage() {
           Belum punya akun?{" "}
           <a
             href="/register"
-            className="text-green-600 hover:underline font-medium"
+            className="text-white hover:underline font-medium"
           >
             Sign Up
           </a>

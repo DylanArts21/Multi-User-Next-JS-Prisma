@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import "../globals.css";
+// import "../globals.css";
+import style from "./Error.module.css";
 export default function ForbiddenPage() {
   const router = useRouter();
 
@@ -22,41 +23,78 @@ export default function ForbiddenPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
-        {/* Icon */}
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-          <svg
-            className="h-8 w-8 text-red-600"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728"
-            />
-          </svg>
+    <div className="w-full flex justify-center">
+      <div className={style.main_wrapper}>
+        <div className={style.main}>
+          <div className={style.antenna}>
+            <div className={style.antenna_shadow}></div>
+            <div className={style.a1}></div>
+            <div className={style.a1d}></div>
+            <div className={style.a2}></div>
+            <div className={style.a2d}></div>
+            <div className={style.a_base}></div>
+          </div>
+          <div className={style.tv}>
+            <div className={style.cruve}>
+              <svg
+                className={style.curve_svg}
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 189.929 189.929"
+                xmlSpace="preserve"
+              >
+                <path
+                  d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13
+        C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z"
+                ></path>
+              </svg>
+            </div>
+            <div className={style.display_div}>
+              <div className={style.screen_out}>
+                <div className={style.screen_out1}>
+                  <div className={style.screen}>
+                    <span className={style.notfound_text}> FORBIDDEN</span>
+                  </div>
+                  <div className={style.screenM}>
+                    <span className={style.notfound_text}> ACCESS DENIED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={style.lines}>
+              <div className={style.line1}></div>
+              <div className={style.line2}></div>
+              <div className={style.line3}></div>
+            </div>
+            <div className={style.buttons_div}>
+              <div className={style.b1}>
+                <div></div>
+              </div>
+              <div className={style.b2}></div>
+              <div className={style.speakers}>
+                <div className={style.g1}>
+                  <div className={style.g11}></div>
+                  <div className={style.g12}></div>
+                  <div className={style.g13}></div>
+                </div>
+                <div className={style.g}></div>
+                <div className={style.g}></div>
+              </div>
+            </div>
+          </div>
+          <div className={style.bottom}>
+            <div className={style.base1}></div>
+            <div className={style.base2}></div>
+            <div className={style.base3}></div>
+          </div>
         </div>
-
-        {/* Title */}
-        <h1 className="text-2xl font-bold text-gray-800">Akses Ditolak</h1>
-
-        {/* Description */}
-        <p className="mt-2 text-gray-600">
-          Kamu tidak memiliki izin untuk mengakses halaman ini.
-        </p>
-
-        {/* Action */}
-        <button
-          onClick={handleBack}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-gray-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-        >
-          Kembali ke Halaman Sebelumnya
-        </button>
+        <div className={style.text_404}>
+          <div className={style.text_4041}>4</div>
+          <div className={style.text_4042}>0</div>
+          <div className={style.text_4043}>3</div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

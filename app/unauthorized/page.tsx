@@ -1,44 +1,100 @@
-import Link from "next/link";
-import "../globals.css";
-export default function UnauthorizedPage() {
+"use client";
+
+import { useRouter } from "next/navigation";
+// import "../globals.css";
+import style from "../forbidden/Error.module.css";
+export default function ForbiddenPage() {
+  const router = useRouter();
+
+  const handleBack = () => {
+    if (typeof window !== "undefined") {
+      if (document.referrer && document.referrer !== "") {
+        window.location.href = document.referrer;
+        return;
+      }
+
+      if (window.history.length > 1) {
+        router.back();
+        return;
+      }
+    }
+
+    router.push("/");
+  };
+
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 text-center">
-        {/* Icon */}
-        <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-          <svg
-            className="h-8 w-8 text-red-600"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"
-            />
-          </svg>
+    <div className="w-full flex justify-center">
+      <div className={style.main_wrapper}>
+        <div className={style.main}>
+          <div className={style.antenna}>
+            <div className={style.antenna_shadow}></div>
+            <div className={style.a1}></div>
+            <div className={style.a1d}></div>
+            <div className={style.a2}></div>
+            <div className={style.a2d}></div>
+            <div className={style.a_base}></div>
+          </div>
+          <div className={style.tv}>
+            <div className={style.cruve}>
+              <svg
+                className={style.curve_svg}
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 189.929 189.929"
+                xmlSpace="preserve"
+              >
+                <path
+                  d="M70.343,70.343c-30.554,30.553-44.806,72.7-39.102,115.635l-29.738,3.951C-5.442,137.659,11.917,86.34,49.129,49.13
+        C86.34,11.918,137.664-5.445,189.928,1.502l-3.95,29.738C143.041,25.54,100.895,39.789,70.343,70.343z"
+                ></path>
+              </svg>
+            </div>
+            <div className={style.display_div}>
+              <div className={style.screen_out}>
+                <div className={style.screen_out1}>
+                  <div className={style.screen}>
+                    <span className={style.notfound_text}>UNAUTHORIZED</span>
+                  </div>
+                  <div className={style.screenM}>
+                    <span className={style.notfound_text}> UNAUTHORIZED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className={style.lines}>
+              <div className={style.line1}></div>
+              <div className={style.line2}></div>
+              <div className={style.line3}></div>
+            </div>
+            <div className={style.buttons_div}>
+              <div className={style.b1}>
+                <div></div>
+              </div>
+              <div className={style.b2}></div>
+              <div className={style.speakers}>
+                <div className={style.g1}>
+                  <div className={style.g11}></div>
+                  <div className={style.g12}></div>
+                  <div className={style.g13}></div>
+                </div>
+                <div className={style.g}></div>
+                <div className={style.g}></div>
+              </div>
+            </div>
+          </div>
+          <div className={style.bottom}>
+            <div className={style.base1}></div>
+            <div className={style.base2}></div>
+            <div className={style.base3}></div>
+          </div>
         </div>
-
-        {/* Title */}
-        <h1 className="text-2xl font-bold text-gray-800">
-          Akses Tidak Terautentikasi
-        </h1>
-
-        {/* Description */}
-        <p className="mt-2 text-gray-600">
-          Kamu harus login terlebih dahulu untuk mengakses halaman ini.
-        </p>
-
-        {/* Action */}
-        <Link
-          href="/"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-        >
-          Masuk
-        </Link>
+        <div className={style.text_404}>
+          <div className={style.text_4041}>4</div>
+          <div className={style.text_4042}>0</div>
+          <div className={style.text_4043}>1</div>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -10,7 +10,7 @@ input:-webkit-autofill:active {
 }
 
 .bgImg {
-  background-image: url("/background-game-store.webp");
+  background-image: url("/store-bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -18,5 +18,5 @@ input:-webkit-autofill:active {
 
 .formTransparent {
   background-color: transparent;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
 }

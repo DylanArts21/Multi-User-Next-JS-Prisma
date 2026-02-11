@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import "@/app/globals.css";
 import Footer from "@/components/Footer";
+import style from "../../styles/login.module.css";
 
 export default function AdminDashboardPage() {
   const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ export default function AdminDashboardPage() {
   const email = session?.user?.email ?? "admin@example.com";
 
   return (
-    <div className="min-h-screen bg-gray-900 flex">
+    <div className={`min-h-screen bg-gray-900 flex`}>
       {/* Sidebar */}
       {open && (
         <div className="fixed inset-0 z-40 flex md:hidden">

@@ -105,13 +105,16 @@ export default function LoginPage() {
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded transition"
-          >
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
+          <div className="flex px-6 pb-8 sm:px-8">
+            <button
+              type="submit"
+              disabled={loading}
+              aria-describedby="tier-company"
+              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-white hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
+            >
+              {loading ? "Signing in..." : "Sign In"}
+            </button>
+          </div>
         </form>
 
         {/* Footer */}
@@ -119,7 +122,7 @@ export default function LoginPage() {
           Belum punya akun?{" "}
           <a
             href="/register"
-            className="text-green-600 hover:underline font-medium"
+            className="text-white hover:underline font-medium"
           >
             Sign Up
           </a>

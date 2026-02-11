@@ -4,6 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { ProductType } from "next-auth";
+import style from "./Card.module.css";
 
 const rupiah = new Intl.NumberFormat("id-ID", {
   style: "currency",
@@ -175,6 +176,99 @@ export default function Product() {
               </table>
             </div>
           )}
+          <div className="flex flex-wrap gap-6 justify-start">
+            {products.map((p, index) => (
+              <div key={p.id} className={`${style.card}`}>
+                <div className={`${style.card__shine}`}></div>
+                <div className={`${style.card__glow}`}></div>
+                <div className={`${style.card__content}`}>
+                  <div className={`${style.card__badge}`}>NEW</div>
+
+                  <div
+                    className={`${style.card__image}`}
+                    style={{ "--bg-color": "#a78bfa" } as React.CSSProperties}
+                  >
+                    {p.imageUrl ? (
+                      <img
+                        src={p.imageUrl}
+                        alt={p.name}
+                        className="object-center object-cover w-full h-full "
+                      />
+                    ) : (
+                      "No Image"
+                    )}
+                  </div>
+
+                  <div className={`${style.card__text}`}>
+                    <p className={`${style.card__title}`}>{p.name}</p>
+                    <p className={`${style.card__description}`}>
+                      Stock {p.stock}
+                    </p>
+                  </div>
+
+                  <div className={`${style.card__footer}`}>
+                    <div className={`${style.card__price}`}>
+                      {rupiah.format(p.price)}
+                    </div>
+
+                    <div className={`${style.card__button}`}>
+                      <svg
+                        height="16"
+                        width="16"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path
+                          strokeWidth="2"
+                          stroke="currentColor"
+                          d="M4 12H20M12 4V20"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* <div className={`${style.card}`}>
+            <div className={`${style.card__shine}`}></div>
+            <div className={`${style.card__glow}`}></div>
+
+            <div className={`${style.card__content}`}>
+              <div className={`${style.card__badge}`}>NEW</div>
+
+              <div
+                className={`${style.card__image}`}
+                style={{ "--bg-color": "#a78bfa" } as React.CSSProperties}
+              ></div>
+
+              <div className={`${style.card__text}`}>
+                <p className={`${style.card__title}`}>Premium Design</p>
+                <p className={`${style.card__description}`}>
+                  Hover to reveal stunning effects
+                </p>
+              </div>
+
+              <div className={`${style.card__footer}`}>
+                <div className={`${style.card__price}`}>$49.99</div>
+
+                <div className={`${style.card__button}`}>
+                  <svg
+                    height="16"
+                    width="16"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      d="M4 12H20M12 4V20"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div> */}
         </main>
 
         <Footer role="user" />
