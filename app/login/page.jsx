@@ -3,8 +3,8 @@
 import { signIn, getSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import styles from "../styles/NewLogin.module.css";
 import style from "../styles/login.module.css";
-
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -62,71 +62,51 @@ export default function LoginPage() {
     <div
       className={`min-h-screen ${style.bgImg} flex items-center justify-center`}
     >
-      <div
-        className={`w-full max-w-md ${style.formTransparent} shadow rounded-lg p-8 border border-2`}
-      >
-        {/* Title */}
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-gray-200">Login</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Silakan masuk ke akun Anda
-          </p>
-        </div>
+      <div className={styles.loginBox}>
+        <p>Login</p>
 
-        {/* Form */}
         <form onSubmit={handleLogin} autoComplete="on">
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-200 mb-1">
-              Email
-            </label>
+          <div className={styles.userBox}>
             <input
+              required
               type="email"
               name="email"
               autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-white text-white "
             />
+            <label>Email</label>
           </div>
 
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-200 mb-1">
-              Password
-            </label>
+          <div className={styles.userBox}>
             <input
+              required
               type="password"
               name="password"
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-white text-white"
             />
+            <label>Password</label>
           </div>
 
-          <div className="flex px-6 pb-8 sm:px-8">
-            <button
-              type="submit"
-              disabled={loading}
-              aria-describedby="tier-company"
-              className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-white hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
-            >
+          <button type="submit" disabled={loading}>
+            <a>
+              <span className={styles.span}></span>
+              <span className={styles.span}></span>
+              <span className={styles.span}></span>
+              <span className={styles.span}></span>
               {loading ? "Signing in..." : "Sign In"}
-            </button>
-          </div>
+            </a>
+          </button>
         </form>
 
-        {/* Footer */}
-        <div className="mt-6 text-center text-sm text-gray-600">
-          Belum punya akun?{" "}
-          <a
-            href="/register"
-            className="text-white hover:underline font-medium"
-          >
-            Sign Up
+        <p>
+          Don't have an account?{" "}
+          <a href="/register" className={styles.a2}>
+            Sign up!
           </a>
-        </div>
+        </p>
       </div>
     </div>
   );

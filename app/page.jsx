@@ -63,7 +63,7 @@ export default function LoginPage() {
       className={`min-h-screen ${style.bgImg} flex items-center justify-center`}
     >
       <div
-        className={`w-full max-w-md ${style.formTransparent} shadow rounded-lg p-8 border border-2`}
+        className={`w-full max-w-md ${style.formTransparent} shadow rounded-lg p-8 border-2`}
       >
         {/* Title */}
         <div className="mb-6 text-center">
