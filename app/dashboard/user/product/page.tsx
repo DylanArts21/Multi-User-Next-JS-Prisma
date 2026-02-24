@@ -132,7 +132,7 @@ export default function Product() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-sm"
+                className="absolute right-10 top-7 text-gray-400 hover:text-white text-sm"
               >
                 ✕
               </button>
