@@ -103,23 +103,18 @@ export default function Product() {
             Dashboard
           </a>
           <a
-            href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
-          >
-            Cart
-          </a>
-          <a
             href="/dashboard/admin/product"
             className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
           >
             Product
           </a>
           <a
-            href="#"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
+            href="/dashboard/user/cart"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
           >
-            Settings
+            Cart
           </a>
+
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="w-full text-left px-4 py-2 rounded text-red-500 hover:bg-red-500 hover:text-white"

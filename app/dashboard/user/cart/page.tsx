@@ -15,6 +15,18 @@ export default function CartPage() {
   const { data: session } = useSession();
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (cart && cart.items.length > 0) {
+      const newTotal = cart.items.reduce((sum, item) => {
+        return sum + (item.product?.price || 0) * item.quantity;
+      }, 0);
+      setTotal(newTotal);
+    } else {
+      setTotal(0);
+    }
+  }, [cart]);
 
   async function fetchCart() {
     try {
@@ -124,7 +136,7 @@ export default function CartPage() {
           ) : !cart || cart.items.length === 0 ? (
             <p className="text-white">Cart kosong</p>
           ) : (
-            <div className="overflow-x-auto bg-black rounded shadow">
+            <div className="overflow-x-autorounded shadow">
               <table className="w-full border-collapse">
                 <thead className="bg-black">
                   <tr>
@@ -136,7 +148,7 @@ export default function CartPage() {
                     <th className="border p-2 text-white">Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-black">
                   {cart.items.map((it, idx) => {
                     const prod = it.product as ProductType;
                     const subtotal = prod ? prod.price * it.quantity : 0;
@@ -164,6 +176,12 @@ export default function CartPage() {
                   })}
                 </tbody>
               </table>
+              <div className="flex items-center gap-4 mt-4 border bg-black px-4 py-2 rounded">
+                <div className="text-2xl font-bold text-white">Total</div>
+                <div className="text-xl font-bold text-white ml-auto">
+                  {rupiah.format(total)}
+                </div>
+              </div>
             </div>
           )}
         </main>
