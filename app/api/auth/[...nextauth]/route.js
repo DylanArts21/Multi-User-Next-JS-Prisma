@@ -33,13 +33,19 @@ export const authOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        token.role = user.role;
+        token.id = user.id; // add id
+      }
       token.createdAt = token.createdAt;
       return token;
     },
     async session({ session, token }) {
-      if (session.user) session.user.role = token.role;
-      session.user.createdAt = token.createdAt;
+      if (session.user) {
+        session.user.role = token.role;
+        session.user.id = token.id;
+        session.user.createdAt = token.createdAt;
+      }
       return session;
     },
   },

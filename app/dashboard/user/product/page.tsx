@@ -43,7 +43,7 @@ export default function Product() {
     fetchProducts();
   }, []);
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     if (!confirm("Yakin ingin menghapus produk ini?")) return;
 
     try {
@@ -60,6 +60,23 @@ export default function Product() {
     } catch (err) {
       console.error(err);
       alert("Gagal menghapus product");
+    }
+  }
+
+  // add item to cart
+  async function addToCart(productId: string) {
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ productId }),
+      });
+      if (!res.ok) throw new Error("Gagal menambah ke cart");
+      alert("Produk berhasil ditambahkan ke cart");
+    } catch (err) {
+      console.error(err);
+      alert("Error saat menambahkan ke cart");
     }
   }
 
@@ -84,6 +101,12 @@ export default function Product() {
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
           >
             Dashboard
+          </a>
+          <a
+            href="/dashboard/user/cart"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+          >
+            Cart
           </a>
           <a
             href="/dashboard/admin/product"
@@ -171,6 +194,7 @@ export default function Product() {
                       <th className="border p-2 text-white">Stok</th>
                       <th className="border p-2 text-white">Gambar</th>
                       <th className="border p-2 text-white">Dibuat</th>
+                      <th className="border p-2 text-white">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -193,6 +217,14 @@ export default function Product() {
                         </td>
                         <td className="border p-2">
                           {new Date(p.createdAt).toLocaleDateString("id-ID")}
+                        </td>
+                        <td className="border p-2">
+                          <button
+                            onClick={() => addToCart(p.id)}
+                            className="px-3 py-1 bg-purple-600 rounded text-white hover:bg-purple-700"
+                          >
+                            + Cart
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -238,7 +270,11 @@ export default function Product() {
                           {rupiah.format(p.price)}
                         </div>
 
-                        <div className={`${style.card__button}`}>
+                        <div
+                          className={`${style.card__button} cursor-pointer`}
+                          onClick={() => addToCart(p.id)}
+                          title="Tambah ke cart"
+                        >
                           <svg
                             height="16"
                             width="16"
