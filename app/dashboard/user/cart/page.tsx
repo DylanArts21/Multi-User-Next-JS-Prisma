@@ -62,6 +62,7 @@ export default function CartPage() {
           items: c.items.map((it) => (it.id === updated.id ? updated : it)),
         };
       });
+      await fetchCart();
     } catch (err) {
       console.error(err);
       alert("Error update quantity");
@@ -84,6 +85,12 @@ export default function CartPage() {
       console.error(err);
       alert("Error hapus item");
     }
+  }
+
+  function updateQuantity(id: string, qty: number) {
+    const item = cart?.items.find((it) => it.id === id);
+    if (!item) return;
+    updateQty(item, qty);
   }
 
   if (!session) {
@@ -143,7 +150,7 @@ export default function CartPage() {
                     <th className="border p-2 text-white">No</th>
                     <th className="border p-2 text-white">Nama</th>
                     <th className="border p-2 text-white">Harga</th>
-
+                    <th className="border p-2 text-white">Qty</th>
                     <th className="border p-2 text-white">Subtotal</th>
                     <th className="border p-2 text-white">Aksi</th>
                   </tr>
@@ -158,6 +165,17 @@ export default function CartPage() {
                         <td className="border p-2 text-left">{prod?.name}</td>
                         <td className="border p-2">
                           {rupiah.format(prod?.price || 0)}
+                        </td>
+                        <td className="border p-2">
+                          <input
+                            type="number"
+                            min={1}
+                            value={it.quantity}
+                            onChange={(e) =>
+                              updateQuantity(it.id, parseInt(e.target.value))
+                            }
+                            className="w-16 border p-1 rounded text-center"
+                          />
                         </td>
 
                         <td className="border p-2">
