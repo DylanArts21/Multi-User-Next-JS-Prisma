@@ -80,10 +80,10 @@ export default function UserDashboardPage() {
             Product
           </a>
           <a
-            href="#"
+            href="/dashboard/user/cart"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
-            Settings
+            Cart
           </a>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}

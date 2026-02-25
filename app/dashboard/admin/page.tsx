@@ -84,13 +84,6 @@ export default function AdminDashboardPage() {
           >
             Product
           </a>
-
-          <a
-            href="#"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
-          >
-            Settings
-          </a>
           <Link
             href="/dashboard/admin/product/create"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"

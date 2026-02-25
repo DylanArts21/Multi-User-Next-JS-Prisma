@@ -2,7 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 type ProductType = {
@@ -24,6 +24,8 @@ export default function ProductPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
+
+  const [searchQuery, setSearchQuery] = useState(""); // 🔍 State untuk search
 
   async function fetchProducts() {
     try {
@@ -62,6 +64,13 @@ export default function ProductPage() {
       alert("Gagal menghapus product");
     }
   }
+
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery.trim()) return products;
+
+    const query = searchQuery.toLowerCase();
+    return products.filter((p) => p.name?.toLowerCase().includes(query));
+  }, [products, searchQuery]);
 
   return (
     <div className="min-h-screen bg-gray-900 flex">
@@ -137,13 +146,6 @@ export default function ProductPage() {
           </Link>
 
           <Link
-            href="#"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
-          >
-            Settings
-          </Link>
-
-          <Link
             href="/dashboard/admin/product/create"
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
@@ -176,13 +178,44 @@ export default function ProductPage() {
           >
             Logout
           </button> */}
+
+          {/* 🔍 Search Input */}
+          <div className="w-full md:w-80">
+            <input
+              type="text"
+              placeholder="Cari produk..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 rounded-lg bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-10 top-7 text-gray-400 hover:text-white text-sm"
+              >
+                ✕
+              </button>
+            )}
+          </div>
         </header>
 
         <main className="p-6 flex-1">
+          {/* Info hasil search */}
+          {searchQuery && !loading && (
+            <p className="text-gray-400 mb-4 text-sm">
+              Menampilkan {filteredProducts.length} dari {products.length}{" "}
+              produk untuk "{searchQuery}"
+            </p>
+          )}
+
           {loading ? (
             <p className="text-white">Loading...</p>
-          ) : products.length === 0 ? (
-            <p className="text-white">Belum ada data</p>
+          ) : filteredProducts.length === 0 ? (
+            <p className="text-white">
+              {searchQuery
+                ? `Tidak ada produk yang cocok dengan "${searchQuery}"`
+                : "Belum ada data"}
+            </p>
           ) : (
             <div className="overflow-x-auto bg-black rounded shadow">
               <table className="w-full border-collapse">
@@ -198,7 +231,7 @@ export default function ProductPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {products.map((p, i) => (
+                  {filteredProducts.map((p, i) => (
                     <tr key={p.id} className="text-center">
                       <td className="border p-2">{i + 1}</td>
                       <td className="border p-2 text-left">{p.name}</td>
