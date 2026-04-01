@@ -113,18 +113,6 @@ export default function CartPage() {
           >
             Cart
           </a>
-          <a
-            href="/dashboard/user/transaction"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
-          >
-            Transaksi
-          </a>
-          <a
-            href="/dashboard/user/transaction/history"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
-          >
-            Histori Transaksi
-          </a>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="w-full text-left px-4 py-2 rounded text-red-500 hover:bg-red-500 hover:text-white"
@@ -154,6 +142,7 @@ export default function CartPage() {
                     <th className="border p-2 text-white">Harga</th>
                     <th className="border p-2 text-white">Qty</th>
                     <th className="border p-2 text-white">Subtotal</th>
+                    <th className="border p-2 text-white">Komentar</th>
                     <th className="border p-2 text-white">Aksi</th>
                   </tr>
                 </thead>
@@ -186,6 +175,30 @@ export default function CartPage() {
                           {rupiah.format(subtotal)}
                         </td>
                         <td className="border p-2">
+                          <input
+                            type="text"
+                            value={it.note || ""}
+                            onChange={async (e) => {
+                              const value = e.target.value;
+
+                              try {
+                                await fetch(`/api/cart/${it.id}`, {
+                                  method: "PATCH",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                  body: JSON.stringify({ note: value }),
+                                });
+                                await fetchCart();
+                              } catch (err) {
+                                console.error(err);
+                              }
+                            }}
+                            className="border p-1 rounded w-full text-white"
+                            placeholder="Catatan item..."
+                          />
+                        </td>
+                        <td className="border p-2">
                           <button
                             onClick={() => removeItem(it.id)}
                             className="px-3 py-1 bg-red-600 rounded text-white hover:bg-red-700"
@@ -200,6 +213,12 @@ export default function CartPage() {
               </table>
               <div className="flex items-center gap-4 mt-4 border bg-black px-4 py-2 rounded">
                 <div className="text-2xl font-bold text-white">Total</div>
+                <a
+                  href="/dashboard/user/checkout"
+                  className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
+                >
+                  Checkout
+                </a>
                 <div className="text-xl font-bold text-white ml-auto">
                   {rupiah.format(total)}
                 </div>

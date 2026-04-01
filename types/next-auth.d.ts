@@ -39,6 +39,7 @@ declare module "next-auth" {
     cartId: string;
     productId: string;
     quantity: number;
+    note?: string; 
     product?: ProductType;
     createdAt?: Date;
     updatedAt?: Date;
