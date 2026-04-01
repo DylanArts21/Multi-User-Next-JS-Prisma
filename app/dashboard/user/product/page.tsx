@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
 import { useEffect, useState, useMemo } from "react";
-import { ProductType } from "next-auth";
+import { Cart, ProductType } from "next-auth";
 import style from "./Card.module.css";
 
 const rupiah = new Intl.NumberFormat("id-ID", {
@@ -19,6 +19,10 @@ export default function Product() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(""); // 🔍 State untuk search
+
+  const [cart, setCart] = useState<Cart | null>(null);
+
+  const cartCount = cart?.items?.length ?? 0;
 
   async function fetchProducts() {
     try {
@@ -78,7 +82,24 @@ export default function Product() {
       console.error(err);
       alert("Error saat menambahkan ke cart");
     }
+    fetchCart();
   }
+
+  async function fetchCart() {
+    try {
+      const res = await fetch("/api/cart", { credentials: "include" });
+      if (!res.ok) throw new Error("Gagal ambil cart");
+      const data = await res.json();
+      setCart(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   // 🔍 Filter produk berdasarkan search query (case-insensitive)
   const filteredProducts = useMemo(() => {
@@ -110,9 +131,15 @@ export default function Product() {
           </a>
           <a
             href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white relative"
           >
             Cart
+            {/* Badge */}
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </a>
 
           <a

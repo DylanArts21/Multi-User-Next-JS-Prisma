@@ -4,6 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { Cart, CartItem, ProductType } from "next-auth";
+import { spawn } from "child_process";
 
 const rupiah = new Intl.NumberFormat("id-ID", {
   style: "currency",
@@ -16,6 +17,8 @@ export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
+
+  const cartCount = cart?.items?.length ?? 0;
 
   useEffect(() => {
     if (cart && cart.items.length > 0) {
@@ -114,9 +117,15 @@ export default function CartPage() {
           </a>
           <a
             href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
+            className="block px-4 py-2 rounded bg-gray-200 text-black font-medium relative"
           >
             Cart
+            {/* Badge */}
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </a>
           <a
             href="/dashboard/user/orders"

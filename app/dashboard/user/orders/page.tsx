@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Footer from "@/components/Footer";
+import { Cart } from "next-auth";
 
 type OrderItem = {
   id: string;
@@ -36,6 +37,10 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [cart, setCart] = useState<Cart | null>(null);
+
+  const cartCount = cart?.items?.length ?? 0;
+
   async function fetchOrders() {
     try {
       const res = await fetch("/api/orders");
@@ -50,6 +55,22 @@ export default function OrdersPage() {
 
   useEffect(() => {
     fetchOrders();
+  }, []);
+
+  async function fetchCart() {
+    try {
+      const res = await fetch("/api/cart", { credentials: "include" });
+      if (!res.ok) throw new Error("Gagal ambil cart");
+      const data = await res.json();
+      setCart(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchCart();
   }, []);
 
   // if (!session) return <p className="p-6">Loading</p>;
@@ -79,9 +100,14 @@ export default function OrdersPage() {
 
           <a
             href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white relative"
           >
             Cart
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </a>
 
           <a

@@ -35,6 +35,8 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("COD");
   const [submitting, setSubmitting] = useState(false);
 
+  const cartCount = cart?.items?.length ?? 0;
+
   const total =
     cart?.items.reduce(
       (sum, item) => sum + item.product.price * item.quantity,
@@ -115,9 +117,14 @@ export default function CheckoutPage() {
           </a>
           <a
             href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white relative"
           >
             Cart
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </a>
           <a
             href="/dashboard/user/orders"

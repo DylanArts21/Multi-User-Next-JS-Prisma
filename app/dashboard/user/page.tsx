@@ -1,13 +1,35 @@
 "use client";
 import Footer from "@/components/Footer";
+import { Cart } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function UserDashboardPage() {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
 
+  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState<Cart | null>(null);
+
   const username = session?.user?.name ?? "User";
   const email = session?.user?.email ?? "email@example.com";
+
+  const cartCount = cart?.items?.length ?? 0;
+
+  async function fetchCart() {
+    try {
+      const res = await fetch("/api/cart", { credentials: "include" });
+      if (!res.ok) throw new Error("Gagal ambil cart");
+      const data = await res.json();
+      setCart(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-900 flex">
@@ -75,9 +97,14 @@ export default function UserDashboardPage() {
           </a>
           <a
             href="/dashboard/user/cart"
-            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black relative"
           >
             Cart
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {cartCount}
+              </span>
+            )}
           </a>
 
           <a
