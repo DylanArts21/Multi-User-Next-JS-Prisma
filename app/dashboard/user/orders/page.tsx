@@ -52,7 +52,7 @@ export default function OrdersPage() {
     fetchOrders();
   }, []);
 
-  if (!session) return <p className="p-6">Harus login</p>;
+  // if (!session) return <p className="p-6">Loading</p>;
 
   return (
     <div className="min-h-screen bg-gray-900 flex">

@@ -119,6 +119,12 @@ export default function CheckoutPage() {
           >
             Cart
           </a>
+          <a
+            href="/dashboard/user/orders"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+          >
+            Orders
+          </a>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="w-full text-left px-4 py-2 rounded text-red-500 hover:bg-red-500 hover:text-white"

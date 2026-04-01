@@ -103,7 +103,7 @@ export default function Product() {
             Dashboard
           </a>
           <a
-            href="/dashboard/admin/product"
+            href="/dashboard/user/product"
             className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
           >
             Product

@@ -88,9 +88,9 @@ export default function CartPage() {
     updateQty(item, qty);
   }
 
-  if (!session) {
-    return <p className="p-6">Please login first.</p>;
-  }
+  // if (!session) {
+  //   return <p className="p-6">Loading</p>;
+  // }
 
   return (
     <div className="min-h-screen bg-gray-900 flex">
@@ -176,7 +176,6 @@ export default function CartPage() {
                           ) : (
                             <input
                               type="number"
-                              min={1}
                               max={prod?.stock || 1}
                               value={it.quantity}
                               onChange={(e) => {

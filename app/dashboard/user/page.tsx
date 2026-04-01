@@ -62,7 +62,7 @@ export default function UserDashboardPage() {
         </div>
         <nav className="p-4 space-y-2">
           <a
-            href="#"
+            href="/dashboard/user"
             className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
           >
             Dashboard
@@ -78,6 +78,13 @@ export default function UserDashboardPage() {
             className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
           >
             Cart
+          </a>
+
+          <a
+            href="/dashboard/user/orders"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white"
+          >
+            Orders
           </a>
 
           <button
