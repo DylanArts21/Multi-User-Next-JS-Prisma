@@ -213,14 +213,17 @@ export default function CartPage() {
               </table>
               <div className="flex items-center gap-4 mt-4 border bg-black px-4 py-2 rounded">
                 <div className="text-2xl font-bold text-white">Total</div>
-                <a
-                  href="/dashboard/user/checkout"
-                  className="block px-4 py-2 rounded bg-gray-200 text-black font-medium"
-                >
-                  Checkout
-                </a>
+
                 <div className="text-xl font-bold text-white ml-auto">
                   {rupiah.format(total)}
+                </div>
+                <div>
+                  <a
+                    href="/dashboard/user/checkout"
+                    className="block px-4 py-2 rounded bg-green-500 text-white font-medium"
+                  >
+                    Checkout
+                  </a>
                 </div>
               </div>
             </div>
