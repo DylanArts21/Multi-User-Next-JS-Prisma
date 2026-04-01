@@ -149,7 +149,6 @@ export default function OrdersPage() {
                     </div>
 
                     <div className="text-right">
-                      <p className="text-sm">{order.status}</p>
                       <p className="text-sm text-gray-400">
                         {new Date(order.createdAt).toLocaleString()}
                       </p>
@@ -189,11 +188,7 @@ export default function OrdersPage() {
                   {/* FOOTER */}
                   <div className="border-t border-gray-700 mt-3 pt-3 flex justify-between">
                     <div>
-                      {order.payment && (
-                        <p className="text-sm text-gray-400">
-                          {order.payment.method} - {order.payment.status}
-                        </p>
-                      )}
+                      <p className="text-sm">{order.status}</p>
                     </div>
 
                     <div className="font-bold">

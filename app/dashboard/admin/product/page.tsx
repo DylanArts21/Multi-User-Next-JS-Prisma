@@ -151,6 +151,12 @@ export default function ProductPage() {
           >
             Tambah Product
           </Link>
+          <Link
+            href="/dashboard/admin/orders"
+            className="block px-4 py-2 rounded hover:bg-gray-500 text-white hover:text-black"
+          >
+            Orders
+          </Link>
 
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
@@ -171,7 +177,7 @@ export default function ProductPage() {
           >
             ☰
           </button>
-          <h1 className="text-lg font-semibold text-white">Dashboard</h1>
+          <h1 className="text-lg font-semibold text-white">Products</h1>
           {/* <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded text-sm"
